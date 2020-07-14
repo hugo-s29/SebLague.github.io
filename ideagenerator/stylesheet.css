@@ -1,63 +1,84 @@
- @font-face { font-family: opensans; src: url('Resources/OpenSans-Regular.ttf');}
+@font-face {
+  font-family: opensans;
+  src: url("../assets/OpenSans-Regular.ttf");
+}
 
 body {
-	background-color: #222222;
+  background-color: #222222;
 }
 
 .social {
-	touch-action: manipulation;
-	/* Disable text selection: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting */
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	-moz-user-select: none; /* Old versions of Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Chrome, Opera and Firefox */
+  touch-action: manipulation;
+  /* Disable text selection: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Chrome, Opera and Firefox */
+}
+
+.social a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  text-decoration: none;
+  color: #fafafa;
+  font-size: 18pt;
+  font-family: opensans;
+}
+
+.social img {
+  border-radius: 50%;
+  border: #fafafa solid 5px;
+
+  margin: 10px;
 }
 
 .prompt {
-	font-family: opensans;
-	color: white;
-	text-align: center;
-	font-size:25px;
+  font-family: opensans;
+  color: white;
+  text-align: center;
+  font-size: 25px;
 
-	position: fixed;
-	width: 90%;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	/*outline: 2px solid #555555;*/
+  position: fixed;
+  width: 90%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*outline: 2px solid #555555;*/
 }
 
 .button {
-	background-color: #4CAFFF;
-	
-	font-family: opensans;
-	text-align: center;
-	font-size: 25px;
-	padding: 10px 0px;
-	color: white;
+  background-color: #4cafff;
 
-	outline-style:none;
-	border:none;
-	cursor:pointer;
+  font-family: opensans;
+  text-align: center;
+  font-size: 25px;
+  padding: 10px 0px;
+  color: white;
 
-	position:fixed;
-	width:50%;
-	bottom : 10%;
-	left : 25%;
+  outline-style: none;
+  border: none;
+  cursor: pointer;
 
-	/* Disable text selection: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting */
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	-moz-user-select: none; /* Old versions of Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Chrome, Opera and Firefox */
+  position: fixed;
+  width: 50%;
+  bottom: 10%;
+  left: 25%;
 
-	/* 
+  /* Disable text selection: https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Chrome, Opera and Firefox */
+
+  /* 
 	Prevent double-tapping on button from zooming page on mobile
 	https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
 	*/
-	touch-action: manipulation; 
+  touch-action: manipulation;
 }
 
 .button:hover {
