@@ -1,0 +1,241 @@
+h2 {
+  font-size: 3rem;
+  padding: 0.2rem;
+  font-weight: 700;
+}
+
+.light {
+  font-weight: 100;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+h1 {
+  font-weight: 100;
+  font-size: 5rem;
+  padding: 0.2rem;
+}
+
+h3 {
+  font-weight: 400;
+  padding: 0.2rem;
+  font-size: 2.3rem;
+}
+
+@media screen and (max-width: 560pt) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+body {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #212121;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  align-items: center;
+}
+body main {
+  background-color: #212121;
+  color: #fafafa;
+}
+body main,
+body section {
+  max-width: 44rem;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+body section.sect1 h1,
+body section.sect1 h2 {
+  align-self: flex-start;
+  z-index: 1;
+  transform: translateY(2rem);
+}
+body section.sect1 img {
+  align-self: flex-end;
+  height: 50vh;
+  transform: translate(45%, 20%);
+  border-radius: 0.7rem;
+}
+body section.sect2 {
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+body section.sect2 h3 {
+  text-align: center;
+  width: 100%;
+}
+body section.sect2 > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body section.sect2 > div a {
+  color: #fafafa;
+}
+body section.sect2 a {
+  position: relative;
+  width: 15rem;
+  height: calc(9 / 16 * 15rem);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-decoration: none;
+  margin: 1rem 0.3rem;
+  overflow: hidden;
+  border-radius: 0.7rem;
+}
+body section.sect2 a img {
+  width: 15rem;
+  height: calc(9 / 16 * 15rem);
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  filter: blur(0);
+  transition: filter 1s;
+}
+body section.sect2 a div {
+  width: 110%;
+  height: 110%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  background: #00bcd4;
+  z-index: 1;
+}
+body section.sect2 a div,
+body section.sect2 a div * {
+  transition: opacity 1s;
+}
+body section.sect2 a div p {
+  color: #fafafa;
+  text-transform: uppercase;
+  text-align: center;
+}
+body section.sect2 a:hover div, body section.sect2 a:active div, body section.sect2 a:focus div {
+  opacity: 0.5;
+}
+body section.sect2 a:hover img, body section.sect2 a:active img, body section.sect2 a:focus img {
+  filter: blur(10px);
+}
+body section.sect3 {
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2rem;
+}
+body section.sect3 h3 {
+  text-align: center;
+  width: 100%;
+}
+body section.sect3 a {
+  margin: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-decoration: none;
+  overflow: hidden;
+  padding: 2rem;
+  color: #fafafa;
+  transition-duration: 1s;
+}
+body section.sect3 a:not(.more-btn) {
+  border-radius: 0.7rem;
+  width: 100%;
+}
+body section.sect3 a.more-btn {
+  padding: 2rem 0;
+  width: calc(50% - 0.3rem);
+}
+body section.sect3 a:hover {
+  background: #673ab7;
+}
+body section.sect3 div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+body > *:not(section) {
+  padding: 0rem;
+}
+
+img {
+  object-fit: cover;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+}
+
+:root {
+  font-size: 16pt;
+}
+
+@media screen and (max-width: 704pt) {
+  body main section.sect1 h1,
+body main section.sect1 h2 {
+    text-align: center;
+    align-self: center;
+  }
+  body main section.sect1 img {
+    align-self: center;
+    height: 35vh;
+    transform: translate(0%, 25%);
+    width: calc(35vh * 16 / 9);
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 560pt) {
+  body main section.sect2 a,
+body main section.sect2 a img,
+body main section.sect2 a div {
+    width: 50vw;
+    height: calc(50vw * 9 / 16);
+  }
+}
+.box-0 {
+  border: solid 0.3rem #ff9800;
+  filter: blur(0);
+  box-shadow: 0.7rem 0.7rem #EF6C00;
+}
+
+.box-1 {
+  box-sizing: content-box;
+  border: solid 0.3rem #00bcd4;
+  filter: blur(0);
+  box-shadow: 0.7rem 0.7rem #00838f;
+}
+
+.box-2 {
+  border: solid 0.3rem #673ab7;
+  filter: blur(0);
+  box-shadow: 0.7rem 0.7rem #4527A0;
+}
+
+/*# sourceMappingURL=index.css.map */

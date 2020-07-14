@@ -1,5 +1,3 @@
-$remVal: 16pt;
-
 h2 {
   font-size: 3rem;
   padding: 0.2rem;
@@ -26,14 +24,18 @@ h3 {
   font-size: 2.3rem;
 }
 
-@media screen and(max-width:$remVal * 35) {
+@media screen and (max-width: 560pt) {
   h1 {
     font-size: 3.5rem;
   }
+
   h2 {
     font-size: 2rem;
   }
+
   h3 {
     font-size: 1.5rem;
   }
 }
+
+/*# sourceMappingURL=typography.css.map */
