@@ -37,6 +37,48 @@ h3 {
     font-size: 1.5rem;
   }
 }
+.hover-animation {
+  transition: all 0.3s;
+  margin: 0.5rem;
+  border-radius: 0.7rem;
+  background: #4a148c;
+}
+.hover-animation:hover {
+  background: #5e35b1;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: calc(2rem * 2 + 2rem);
+  font-size: 1.2rem;
+  line-height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+nav li {
+  list-style: none;
+}
+nav a {
+  color: #fafafa;
+  padding: 2rem 0.5rem;
+  text-decoration: none;
+}
+nav a.nav-selected {
+  color: #757575;
+  cursor: default;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;
@@ -53,30 +95,40 @@ body main {
 body main,
 body section {
   max-width: 44rem;
+  position: relative;
   width: 100%;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 1rem;
 }
+body main:not(.small),
+body section:not(.small) {
+  min-height: 100vh;
+}
+body main.small,
+body section.small {
+  height: calc(2rem * 2 + 2rem);
+}
 body section.sect1 h1,
 body section.sect1 h2 {
   align-self: flex-start;
   z-index: 1;
-  transform: translateY(2rem);
+  transform: translateY(-2rem);
 }
 body section.sect1 img {
   align-self: flex-end;
   height: 50vh;
-  transform: translate(45%, 20%);
+  transform: translateX(45%);
   border-radius: 0.7rem;
+  background-color: var(--color0);
 }
 body section.sect2 {
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding-right: 3rem;
 }
 body section.sect2 h3 {
   text-align: center;
@@ -103,6 +155,16 @@ body section.sect2 a {
   overflow: hidden;
   border-radius: 0.7rem;
 }
+body section.sect2 a:not(.more-btn) {
+  background: var(--color1);
+}
+body section.sect2 a.unsplit {
+  width: 100%;
+  height: calc(9 / 16 * 15rem / 2);
+}
+body section.sect2 a.unsplit img {
+  width: 100%;
+}
 body section.sect2 a img {
   width: 15rem;
   height: calc(9 / 16 * 15rem);
@@ -115,14 +177,26 @@ body section.sect2 a img {
   filter: blur(0);
   transition: filter 1s;
 }
+body section.sect2 a > p {
+  color: #fafafa;
+  text-transform: uppercase;
+  text-align: center;
+}
+body section.sect2 a.more-btn {
+  transform: translate(0.7rem, 0.7rem);
+  background-color: #00695c;
+}
+body section.sect2 a.more-btn:hover {
+  background-color: #009688;
+}
 body section.sect2 a div {
-  width: 110%;
-  height: 110%;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
-  background: #00bcd4;
+  background: var(--color1);
   z-index: 1;
 }
 body section.sect2 a div,
@@ -151,32 +225,35 @@ body section.sect3 h3 {
   width: 100%;
 }
 body section.sect3 a {
-  margin: 0.7rem;
+  text-decoration: none;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
   display: flex;
-  text-decoration: none;
-  overflow: hidden;
-  padding: 2rem;
   color: #fafafa;
   transition-duration: 1s;
 }
-body section.sect3 a:not(.more-btn) {
+body section.sect3 a:not(.more-btn), body section.sect3 a.more-btn.unsplit {
+  padding: 2rem;
   border-radius: 0.7rem;
   width: 100%;
+  margin: 0.7rem;
 }
-body section.sect3 a.more-btn {
+body section.sect3 a:not(.more-btn).more-btn.unsplit, body section.sect3 a.more-btn.unsplit.more-btn.unsplit {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+body section.sect3 a.more-btn:not(.unsplit) {
   padding: 2rem 0;
   width: calc(50% - 0.3rem);
 }
-body section.sect3 a:hover {
-  background: #673ab7;
-}
-body section.sect3 div {
+body section.sect3 > div {
   justify-content: center;
   align-items: center;
   display: flex;
   width: 100%;
+  height: 100%;
+  transform: translate(0.7rem, 0.7rem);
 }
 body > *:not(section) {
   padding: 0rem;
@@ -191,10 +268,17 @@ img {
   padding: 0;
   box-sizing: border-box;
   font-family: "Raleway", sans-serif;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 :root {
   font-size: 16pt;
+  --color0: #ff9800;
+  --bgColor0: #ef6c00;
+  --color1: #00bcd4;
+  --bgColor1: #00838f;
+  --color2: #673ab7;
+  --bgColor2: #4527a0;
 }
 
 @media screen and (max-width: 704pt) {
@@ -220,22 +304,31 @@ body main section.sect2 a div {
   }
 }
 .box-0 {
-  border: solid 0.3rem #ff9800;
+  border: solid 0.3rem var(--color0);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem #EF6C00;
+  box-shadow: 0.7rem 0.7rem var(--bgColor0);
+}
+.box-0:hover:not(.no-hover) {
+  background: var(--color0);
 }
 
 .box-1 {
-  box-sizing: content-box;
-  border: solid 0.3rem #00bcd4;
+  border: solid 0.3rem var(--color1);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem #00838f;
+  box-shadow: 0.7rem 0.7rem var(--bgColor1);
+  box-sizing: content-box;
+}
+.box-1:hover:not(.no-hover) {
+  background: var(--color1);
 }
 
 .box-2 {
-  border: solid 0.3rem #673ab7;
+  border: solid 0.3rem var(--color2);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem #4527A0;
+  box-shadow: 0.7rem 0.7rem var(--bgColor2);
+}
+.box-2:hover:not(.no-hover) {
+  background: var(--color2);
 }
 
 /*# sourceMappingURL=index.css.map */

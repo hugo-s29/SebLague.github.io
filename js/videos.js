@@ -1,7 +1,8 @@
-/// <reference types="./module" />
 /**
  * @type {import("./module").Video[]}
- */ const videos = [
+ */
+
+const _coding_adventures = [
   {
     id: "boids",
     thumbnail: "boids.jpg",
@@ -75,4 +76,3 @@
     url: "https://www.youtube.com/watch?v=7axImc1sxa0",
   },
 ];
-window.videos = videos;

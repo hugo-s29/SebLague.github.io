@@ -8,42 +8,29 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="./js/load.js"></script>
     <script src="./js/videos.js"></script>
+    <script src="./js/load.js"></script>
     <script src="./js/colors.js"></script>
     <script src="./js/render.js"></script>
     <script src="./js/menu.js"></script>
     <script>
-      window.current_page_id = "home";
+      window.current_page_id = "coding_adventures";
 
       requestData({
-        getcoding_adventures: 6,
-        getrepos: 5,
+        getcoding_adventures: true,
+        getrepos: false,
       });
     </script>
   </head>
+
   <body>
     <main>
       <section class="small">
         <nav></nav>
       </section>
-      <section class="sect1">
-        <h1>Sebastian <span class="bold">Lague</span></h1>
-        <h2>Game dev <span class="light">&</span> Youtuber</h2>
-        <img
-          src="./assets/videos/portals-raw.png"
-          alt="Portals image"
-          class="box-0"
-        />
-      </section>
-      <h2>Videos</h2>
       <section class="sect2">
         <h3>Coding Adventures</h3>
         <!-- Videos injected here -->
-      </section>
-      <section class="sect3">
-        <h3>GitHub</h3>
-        <!-- Repositories injected here -->
       </section>
     </main>
   </body>
