@@ -32,6 +32,10 @@ body {
     &.small {
       height: calc(2rem * 2 + 2rem);
     }
+
+    &.medium {
+      min-height: calc(100vh - (2rem * 2 + 2rem));
+    }
   }
 
   section {
@@ -42,13 +46,33 @@ body {
         z-index: 1;
         transform: translateY(-2rem);
       }
-      img {
+      & > img {
         align-self: flex-end;
         height: 50vh;
         transform: translateX(45%);
         border-radius: 0.7rem;
         background-color: var(--color0);
       }
+
+      .social {
+        align-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 50%;
+        img {
+          filter: grayscale(100%) opacity(0.3);
+          transition-duration: 1s;
+          border-radius: 50%;
+          &:hover {
+            filter: grayscale(0) opacity(1);
+          }
+        }
+      }
+    }
+
+    & > h2 {
+      transform: translateY(-50%);
     }
 
     &.sect2 {
@@ -243,19 +267,28 @@ $remVal: 16pt;
             align-self: center;
           }
 
-          img {
+          h1 {
+            font-size: 4rem;
+          }
+
+          & > img {
             align-self: center;
             height: 35vh;
-            transform: translate(0%, 25%);
+            transform: translate(0%, 0%);
             width: calc(35vh * 16 / 9);
             max-width: 100%;
+          }
+
+          .social {
+            align-self: center;
+            transform: translate(0%, 100%);
           }
         }
       }
     }
   }
 }
-@media screen and(max-width:$remVal * 35) {
+@media screen and(max-width:$remVal * 37) {
   body {
     main {
       section {
@@ -265,6 +298,12 @@ $remVal: 16pt;
           a div {
             width: 50vw;
             height: calc(50vw * 9 / 16);
+          }
+          justify-content: center;
+        }
+        &.sect1 {
+          .social {
+            width: 100%;
           }
         }
       }
