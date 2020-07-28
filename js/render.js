@@ -1,27 +1,96 @@
+import { materialColors, colorRange } from "./colors";
+import { renderMenu } from "./menu";
+import $ from "jquery";
+
 /**
  * render the page with data
  * @param {Object} param0 Requested data
  * @param {any[]} param0.repos Github Repositories list
  * @param {import("./module").Video[]} param0.coding_adventures Coding Adventures list
  * @param {import("./module").Page[]} param0.pages Page list
+ * @param {import("./module").Tutorial[]} param0.tutorials Page list
  * @param {string} param0.current_id Current page ID
+ * @param {boolean | number} param0.gettutorials Limit the number of coding adventures displayed
  * @param {boolean | number} param0.getcoding_adventures Limit the number of coding adventures displayed
  * @param {boolean | number} param0.getrepos Limit the number of repositories displayed
  */
-function render({
+export function render({
   repos,
   coding_adventures,
+  tutorials,
   pages,
   current_id,
   getcoding_adventures,
   getrepos,
+  gettutorials,
 }) {
   renderMenu(pages, current_id);
 
   let i;
+  // ----- TUTORIALS -----
+  if (tutorials) {
+    const tutorialsSection = $("section.sect4");
+
+    const caColors = colorRange(
+      materialColors.amber[600],
+      materialColors.deeporange[500],
+      tutorials.length
+    );
+    const caBgColors = colorRange(
+      materialColors.amber[800],
+      materialColors.deeporange[800],
+      tutorials.length
+    );
+
+    i = 0;
+    for (const { id, thumbnail, displayName, url, videoCount } of tutorials) {
+      const elem = $("<a></a>");
+      elem.addClass("box-3");
+      const img = $("<img></img>");
+      const titleContainer = $("<div></div>");
+      const title = $("<p></p>");
+      const count = $("<p></p>");
+      elem.css("--bgColor1", caBgColors[i]);
+      elem.css("--color1", caColors[i]);
+      img.attr("src", `assets/tutorials/${thumbnail}`);
+      title.text(displayName);
+      count.addClass("small");
+      count.text(`${videoCount} videos`);
+      title.append(count);
+      elem.attr("href", url);
+      elem.attr("id", id);
+      elem.append(img);
+      titleContainer.append(title);
+      elem.append(titleContainer);
+      tutorialsSection.append(elem);
+      i++;
+    }
+
+    const moreTutorialsYtContainer = $("<p></p>");
+    const moreTutorialsYt = $("<a></a>");
+    moreTutorialsYt.addClass("more-btn");
+    if (!(gettutorials !== true)) moreTutorialsYt.addClass("unsplit");
+    moreTutorialsYt.attr(
+      "href",
+      "https://www.youtube.com/c/SebastianLague/playlists?view=1&sort=dd&shelf_id=0"
+    );
+    moreTutorialsYtContainer.text("See on Youtube");
+    moreTutorialsYt.append(moreTutorialsYtContainer);
+    tutorialsSection.append(moreTutorialsYt);
+    if (gettutorials !== true) {
+      const moreTutorialsContainer = $("<p></p>");
+      const moreTutorials = $("<a></a>");
+      moreTutorials.addClass("more-btn");
+      moreTutorials.attr("href", "/tutorials.html");
+      moreTutorialsContainer.text("See other tutorials");
+      moreTutorials.append(moreTutorialsContainer);
+      tutorialsSection.append(moreTutorials);
+    }
+  }
+
   // ----- CODING ADVENTURES -----
   if (coding_adventures) {
-    const codingAdventuresSections = document.querySelector("section.sect2");
+    const codingAdventuresSection = $("section.sect2");
 
     const caColors = colorRange(
       materialColors.green[500],
@@ -36,48 +105,50 @@ function render({
 
     i = 0;
     for (const { id, thumbnail, displayName, url } of coding_adventures) {
-      const elem = document.createElement("a");
-      elem.classList.add("box-1");
-      const img = document.createElement("img");
-      const titleContainer = document.createElement("div");
-      const title = document.createElement("p");
-      elem.style.setProperty("--bgColor1", caBgColors[i]);
-      elem.style.setProperty("--color1", caColors[i]);
-      img.src = `assets/videos/${thumbnail}`;
-      title.innerText = displayName;
-      elem.href = url;
-      elem.id = id;
-      elem.appendChild(img);
-      titleContainer.appendChild(title);
-      elem.appendChild(titleContainer);
-      codingAdventuresSections.appendChild(elem);
+      const elem = $("<a></a>");
+      elem.addClass("box-1");
+      const img = $("<img></img>");
+      const titleContainer = $("<div></div>");
+      const title = $("<p></p>");
+      elem.css("--bgColor1", caBgColors[i]);
+      elem.css("--color1", caColors[i]);
+      img.attr("src", `assets/videos/${thumbnail}`);
+      title.text(displayName);
+      elem.attr("href", url);
+      elem.attr("id", id);
+      elem.append(img);
+      titleContainer.append(title);
+      elem.append(titleContainer);
+      codingAdventuresSection.append(elem);
       i++;
     }
 
-    const moreCodingAdventuresYtContainer = document.createElement("p");
-    const moreCodingAdventuresYt = document.createElement("a");
-    moreCodingAdventuresYt.classList.add("more-btn");
-    if (!(getcoding_adventures !== true && getcoding_adventures !== false))
-      moreCodingAdventuresYt.classList.add("unsplit");
-    moreCodingAdventuresYt.href =
-      "https://www.youtube.com/playlist?list=PLFt_AvWsXl0ehjAfLFsp1PGaatzAwo0uK";
-    moreCodingAdventuresYtContainer.innerText = "See on Youtube";
-    moreCodingAdventuresYt.appendChild(moreCodingAdventuresYtContainer);
-    codingAdventuresSections.appendChild(moreCodingAdventuresYt);
-    if (getcoding_adventures !== true && getcoding_adventures !== false) {
-      const moreCodingAdventuresContainer = document.createElement("p");
-      const moreCodingAdventures = document.createElement("a");
-      moreCodingAdventures.classList.add("more-btn");
-      moreCodingAdventures.href = "/coding_adventures.html";
-      moreCodingAdventuresContainer.innerText = "See other adventures";
-      moreCodingAdventures.appendChild(moreCodingAdventuresContainer);
-      codingAdventuresSections.appendChild(moreCodingAdventures);
+    const moreCodingAdventuresYtContainer = $("<p></p>");
+    const moreCodingAdventuresYt = $("<a></a>");
+    moreCodingAdventuresYt.addClass("more-btn");
+    if (!(getcoding_adventures !== true))
+      moreCodingAdventuresYt.addClass("unsplit");
+    moreCodingAdventuresYt.attr(
+      "href",
+      "https://www.youtube.com/playlist?list=PLFt_AvWsXl0ehjAfLFsp1PGaatzAwo0uK"
+    );
+    moreCodingAdventuresYtContainer.text("See on Youtube");
+    moreCodingAdventuresYt.append(moreCodingAdventuresYtContainer);
+    codingAdventuresSection.append(moreCodingAdventuresYt);
+    if (getcoding_adventures !== true) {
+      const moreCodingAdventuresContainer = $("<p></p>");
+      const moreCodingAdventures = $("<a></a>");
+      moreCodingAdventures.addClass("more-btn");
+      moreCodingAdventures.attr("href", "/coding_adventures.html");
+      moreCodingAdventuresContainer.text("See other adventures");
+      moreCodingAdventures.append(moreCodingAdventuresContainer);
+      codingAdventuresSection.append(moreCodingAdventures);
     }
   }
   if (repos) {
     // ----- GITHUB -----
 
-    const gitHubSection = document.querySelector("section.sect3");
+    const gitHubSection = $("section.sect3");
     const ghColors = colorRange(
       (window.ghColorsStart || materialColors.pink)[500],
       (window.ghColorsEnd || materialColors.deeppurple)[500],
@@ -91,40 +162,39 @@ function render({
 
     i = 0;
     for (const { html_url, name, node_id } of repos) {
-      const elem = document.createElement("a");
-      const titleContainer = document.createElement("div");
-      const title = document.createElement("p");
-      title.innerText = name.replace("-", " ");
-      elem.classList.add("box-2");
-      elem.style.setProperty("--bgColor2", ghBgColors[i]);
-      elem.style.setProperty("--color2", ghColors[i]);
-      elem.href = html_url;
-      elem.id = node_id;
-      titleContainer.appendChild(title);
-      elem.appendChild(titleContainer);
-      gitHubSection.appendChild(elem);
+      const elem = $("<a></a>");
+      const titleContainer = $("<div></div>");
+      const title = $("<p></p>");
+      title.text(name.replace("-", " "));
+      elem.addClass("box-2");
+      elem.css("--bgColor2", ghBgColors[i]);
+      elem.css("--color2", ghColors[i]);
+      elem.attr("href", html_url);
+      elem.attr("id", node_id);
+      titleContainer.append(title);
+      elem.append(titleContainer);
+      gitHubSection.append(elem);
       i++;
     }
 
-    const moreGithubContainer = document.createElement("div");
-    const moreGithub = document.createElement("a");
-    moreGithub.href = "https://github.com/SebLague";
-    if (!(getrepos !== true && getrepos !== false))
-      moreGithub.classList.add("unsplit");
-    moreGithub.classList.add("more-btn");
-    moreGithub.innerText = "Go to GitHub";
-    moreGithubContainer.appendChild(moreGithub);
-    if (getrepos !== true && getrepos !== false) {
-      const moreRepos = document.createElement("a");
-      moreRepos.href = "/repositories.html";
-      moreRepos.classList.add("more-btn");
-      moreRepos.innerText = "See all repositories";
-      moreGithubContainer.appendChild(moreRepos);
+    const moreGithubContainer = $("<div></div>");
+    const moreGithub = $("<a></a>");
+    moreGithub.attr("href", "https://github.com/SebLague");
+    if (!(getrepos !== true)) moreGithub.addClass("unsplit");
+    moreGithub.addClass("more-btn");
+    moreGithub.text("Go to GitHub");
+    moreGithubContainer.append(moreGithub);
+    if (getrepos !== true) {
+      const moreRepos = $("<a></a>");
+      moreRepos.attr("href", "/repositories.html");
+      moreRepos.addClass("more-btn");
+      moreRepos.text("See all repositories");
+      moreGithubContainer.append(moreRepos);
     }
-    gitHubSection.appendChild(moreGithubContainer);
+    gitHubSection.append(moreGithubContainer);
   }
 
-  document
-    .querySelectorAll(".more-btn")
-    .forEach((f) => f.classList.add("hover-animation"));
+  $(".more-btn").addClass("hover-animation");
 }
+
+export default render;

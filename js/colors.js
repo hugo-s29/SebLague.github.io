@@ -1,12 +1,12 @@
 // https://stackoverflow.com/a/30219884/12446838
-function GColor(r, g, b) {
+export function GColor(r, g, b) {
   r = r || 0;
   g = g || 0;
   b = b || 0;
   return { r, g, b };
 }
 
-function createColorRangeRGB(c1, c2, count) {
+export function createColorRangeRGB(c1, c2, count) {
   const colorList = [];
   let tmpColor;
   for (let i = 0; i < count; i++) {
@@ -19,7 +19,7 @@ function createColorRangeRGB(c1, c2, count) {
   return colorList;
 }
 
-function colorRange(c1, c2, count) {
+export function colorRange(c1, c2, count) {
   const rgbC1 = hexToRgb(c1);
   const rgbC2 = hexToRgb(c2);
 
@@ -29,7 +29,7 @@ function colorRange(c1, c2, count) {
 }
 
 // https://stackoverflow.com/a/5624139/12446838
-function hexToRgb(hex) {
+export function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
@@ -40,14 +40,14 @@ function hexToRgb(hex) {
     : null;
 }
 
-function rgbToHex({ r, g, b }) {
+export function rgbToHex({ r, g, b }) {
   r = Math.floor(r);
   g = Math.floor(g);
   b = Math.floor(b);
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-const materialColors = {
+export const materialColors = {
   red: {
     "50": "#ffebee",
     "100": "#ffcdd2",

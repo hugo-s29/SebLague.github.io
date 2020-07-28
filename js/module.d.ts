@@ -14,8 +14,8 @@ export interface Page {
 export interface Tutorial {
   id: string;
   displayName: string;
-  description: string;
-  playlist: string;
+  //description: string;
+  url: string;
   videoCount: number;
-  duration: number;
+  thumbnail: string;
 }

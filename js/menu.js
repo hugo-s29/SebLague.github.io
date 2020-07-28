@@ -1,7 +1,9 @@
+import $ from "jquery";
+
 /**
  * @type {import("./module").Page[]}
  */
-const _pages = [
+export const _pages = [
   {
     file: "index.html",
     displayName: "Home",
@@ -11,6 +13,11 @@ const _pages = [
     file: "coding_adventures.html",
     displayName: "Coding Adventures",
     id: "coding_adventures",
+  },
+  {
+    file: "tutorials.html",
+    displayName: "Tutorials",
+    id: "tutorials",
   },
   {
     file: "repositories.html",
@@ -23,19 +30,21 @@ const _pages = [
  * @param {import("./module").Page[]} pages
  * @param {string} current_id
  */
-function renderMenu(pages, current_id) {
-  const nav = document.querySelector("nav");
-  const ul = document.createElement("ul");
+export function renderMenu(pages, current_id) {
+  const nav = $("nav");
+  const ul = $("<ul></ul>");
 
   for (const { id, file, displayName } of pages) {
-    const link = document.createElement("a");
-    link.textContent = displayName;
-    if (id === current_id) link.classList.add("nav-selected");
-    else link.href = file;
+    const link = $("<a></a>");
+    link.text(displayName);
+    if (id === current_id) link.addClass("nav-selected");
+    else link.attr("href", file);
 
-    const li = document.createElement("li");
-    li.appendChild(link);
-    ul.appendChild(li);
+    const li = $("<li></li>");
+    li.append(link);
+    ul.append(li);
   }
-  nav.appendChild(ul);
+  nav.append(ul);
 }
+
+export default renderMenu;

@@ -6,6 +6,7 @@ body {
   min-height: 100vh;
 
   background-color: #212121;
+  -js-display: flex;
   display: flex;
   justify-content: center;
   overflow-x: hidden;
@@ -20,17 +21,17 @@ body {
     max-width: 44rem;
     position: relative;
     width: 100%;
+    -js-display: flex;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding: 1rem;
-    &:not(.small) {
-      min-height: 100vh;
-    }
+    min-height: 100vh;
 
     &.small {
       height: calc(2rem * 2 + 2rem);
+      min-height: auto;
     }
 
     &.medium {
@@ -51,11 +52,12 @@ body {
         height: 50vh;
         transform: translateX(45%);
         border-radius: 0.7rem;
-        background-color: var(--color0);
+        background-color: var(--color0, #ff9800);
       }
 
       .social {
         align-self: start;
+        -js-display: flex;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
@@ -87,6 +89,7 @@ body {
 
       & > div {
         width: 100%;
+        -js-display: flex;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -101,13 +104,14 @@ body {
         height: calc(9 / 16 * 15rem);
         justify-content: center;
         align-items: center;
+        -js-display: flex;
         display: flex;
         text-decoration: none;
         margin: 1rem 0.3rem;
         overflow: hidden;
         border-radius: 0.7rem;
         &:not(.more-btn) {
-          background: var(--color1);
+          background: var(--color1, #009688);
         }
 
         &.unsplit {
@@ -149,11 +153,12 @@ body {
         div {
           width: 100%;
           height: 100%;
+          -js-display: flex;
           display: flex;
           justify-content: center;
           align-items: center;
           opacity: 0;
-          background: var(--color1);
+          background: var(--color1, #00695c);
           z-index: 1;
           &,
           * {
@@ -196,6 +201,7 @@ body {
         overflow: hidden;
         justify-content: center;
         align-items: center;
+        -js-display: flex;
         display: flex;
         color: #fafafa;
         &:not(.more-btn),
@@ -219,10 +225,125 @@ body {
       & > div {
         justify-content: center;
         align-items: center;
+        -js-display: flex;
         display: flex;
         width: 100%;
         height: 100%;
         transform: translate(0.7rem, 0.7rem);
+      }
+    }
+
+    &.sect4 {
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-right: 3rem;
+      h3 {
+        text-align: center;
+        width: 100%;
+      }
+
+      & > div {
+        width: 100%;
+        -js-display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a {
+          color: #fafafa;
+        }
+      }
+
+      a {
+        position: relative;
+        width: 15rem;
+        height: calc(9 / 16 * 15rem);
+        justify-content: center;
+        align-items: center;
+        -js-display: flex;
+        display: flex;
+        text-decoration: none;
+        margin: 1rem 0.3rem;
+        overflow: hidden;
+        border-radius: 0.7rem;
+        &:not(.more-btn) {
+          background: var(--color1, #00bcd4);
+        }
+
+        &.unsplit {
+          width: 100%;
+          height: calc(9 / 16 * 15rem / 2);
+          img {
+            width: 100%;
+          }
+        }
+
+        img {
+          width: 15rem;
+          height: calc(9 / 16 * 15rem);
+          z-index: 0;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: absolute;
+          filter: blur(0);
+          transition: filter 1s;
+        }
+
+        & > p {
+          color: #fafafa;
+          text-transform: uppercase;
+          text-align: center;
+        }
+
+        &.more-btn {
+          transform: translate(0.7rem, 0.7rem);
+          background-color: #d84315;
+
+          &:hover {
+            background-color: #ff5722;
+          }
+        }
+
+        div {
+          width: 100%;
+          height: 100%;
+          -js-display: flex;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 0;
+          background: var(--color1, #00bcd4);
+          z-index: 1;
+          &,
+          * {
+            transition: opacity 1s;
+          }
+          p {
+            color: #fafafa;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0.5rem;
+            margin: 0.3rem 0;
+
+            &.small {
+              font-size: 0.7em;
+            }
+          }
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          div {
+            opacity: 0.5;
+          }
+
+          img {
+            filter: blur(10px);
+          }
+        }
       }
     }
   }
@@ -250,10 +371,12 @@ $remVal: 16pt;
   font-size: $remVal;
   --color0: #ff9800;
   --bgColor0: #ef6c00;
-  --color1: #00bcd4;
-  --bgColor1: #00838f;
+  --color1: #009688;
+  --bgColor1: #00695c;
   --color2: #673ab7;
   --bgColor2: #4527a0;
+  --color3: #ff5722;
+  --bgColor3: #d84315;
 }
 
 @media screen and(max-width:$remVal * 44) {
@@ -292,7 +415,8 @@ $remVal: 16pt;
   body {
     main {
       section {
-        &.sect2 {
+        &.sect2,
+        &.sect4 {
           a,
           a img,
           a div {
@@ -312,32 +436,42 @@ $remVal: 16pt;
 }
 
 .box-0 {
-  border: solid 0.3rem var(--color0);
+  border: solid 0.3rem var(--color0, #ff9800);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem var(--bgColor0);
+  box-shadow: 0.7rem 0.7rem var(--bgColor0, #ef6c00);
 
   &:hover:not(.no-hover) {
-    background: var(--color0);
+    background: var(--color0, #ff9800);
   }
 }
 
 .box-1 {
-  border: solid 0.3rem var(--color1);
+  border: solid 0.3rem var(--color1, #00bcd4);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem var(--bgColor1);
+  box-shadow: 0.7rem 0.7rem var(--bgColor1, #00838f);
 
   &:hover:not(.no-hover) {
-    background: var(--color1);
+    background: var(--color1, #00bcd4);
   }
   box-sizing: content-box;
 }
 
 .box-2 {
-  border: solid 0.3rem var(--color2);
+  border: solid 0.3rem var(--color2, #673ab7);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem var(--bgColor2);
+  box-shadow: 0.7rem 0.7rem var(--bgColor2, #4527a0);
 
   &:hover:not(.no-hover) {
-    background: var(--color2);
+    background: var(--color2, #673ab7);
+  }
+}
+
+.box-3 {
+  border: solid 0.3rem var(--color3, #ff5722);
+  filter: blur(0);
+  box-shadow: 0.7rem 0.7rem var(--bgColor3, #d84315);
+
+  &:hover:not(.no-hover) {
+    background: var(--color3, #ff5722);
   }
 }
