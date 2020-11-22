@@ -34,3 +34,14 @@ nav {
     }
   }
 }
+
+@media screen and(max-width:900px) {
+  nav {
+    position: static;
+    display: block;
+    ul {
+      flex-direction: column;
+    }
+    height: 50vh;
+  }
+}

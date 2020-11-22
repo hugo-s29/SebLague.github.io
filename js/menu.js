@@ -24,6 +24,11 @@ export const _pages = [
     displayName: "Repositories",
     id: "repositories",
   },
+  {
+    file: "tools.html",
+    displayName: "Tools",
+    id: "tools",
+  },
 ];
 
 /**

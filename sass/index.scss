@@ -185,7 +185,18 @@ body {
       }
     }
 
-    &.sect3 {
+    &.sect5 {
+      a.more-btn {
+        background: #689f38;
+
+        &:hover {
+          background: #8bc34a;
+        }
+      }
+    }
+
+    &.sect3,
+    &.sect5 {
       flex-wrap: wrap;
       flex-direction: row;
       justify-content: space-evenly;
@@ -337,7 +348,7 @@ body {
         &:active,
         &:focus {
           div {
-            opacity: 0.5;
+            opacity: 1;
           }
 
           img {
@@ -467,11 +478,11 @@ $remVal: 16pt;
 }
 
 .box-3 {
-  border: solid 0.3rem var(--color3, #ff5722);
+  border: solid 0.3rem var(--color1, #ff5722);
   filter: blur(0);
-  box-shadow: 0.7rem 0.7rem var(--bgColor3, #d84315);
+  box-shadow: 0.7rem 0.7rem var(--bgColor1, #d84315);
 
   &:hover:not(.no-hover) {
-    background: var(--color3, #ff5722);
+    background: var(--color1, #ff5722);
   }
 }

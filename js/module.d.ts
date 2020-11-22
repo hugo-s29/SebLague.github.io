@@ -19,3 +19,8 @@ export interface Tutorial {
   videoCount: number;
   thumbnail: string;
 }
+
+export interface Tool {
+  url: string;
+  displayName: string;
+}

@@ -1,5 +1,5 @@
 import render from "./render";
-import { _coding_adventures, _tutorials } from "./videos";
+import { _coding_adventures, _tutorials, _tools } from "./videos";
 import $ from "jquery";
 import { _pages } from "./menu";
 import cssVars from "css-vars-ponyfill";
@@ -18,11 +18,12 @@ export async function requestData({
   getrepos,
   getcoding_adventures,
   gettutorials,
+  gettools,
 }) {
   //   const repos = await fetch("https://api.github.com/users/SebLague/repos")
   //     .then((f) => f.json())
   //     .then((f) => f.filter(limit(5)));
-  let repos, coding_adventures, tutorials;
+  let repos, coding_adventures, tutorials, tools;
 
   if (getrepos)
     if (process.env.NODE_ENV === "development")
@@ -42,18 +43,24 @@ export async function requestData({
     tutorials = _tutorials
       .sort(() => Math.random() - 0.5)
       .filter(limit(gettutorials));
+
+  if (gettools)
+    tools = _tools.sort(() => Math.random() - 0.5).filter(limit(gettools));
+
   const pages = _pages;
 
   const _render = () =>
     render({
       repos,
       coding_adventures,
+      tools,
       current_id: window.current_page_id,
       pages,
       getcoding_adventures,
       getrepos,
       tutorials,
       gettutorials,
+      gettools,
     });
   if (loaded) {
     _render();

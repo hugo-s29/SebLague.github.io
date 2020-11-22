@@ -8,21 +8,25 @@ import $ from "jquery";
  * @param {any[]} param0.repos Github Repositories list
  * @param {import("./module").Video[]} param0.coding_adventures Coding Adventures list
  * @param {import("./module").Page[]} param0.pages Page list
+ * @param {import("./module").Tool[]} param0.tools Tool list
  * @param {import("./module").Tutorial[]} param0.tutorials Page list
  * @param {string} param0.current_id Current page ID
- * @param {boolean | number} param0.gettutorials Limit the number of coding adventures displayed
+ * @param {boolean | number} param0.gettutorials Limit the number of tutorials displayed
  * @param {boolean | number} param0.getcoding_adventures Limit the number of coding adventures displayed
+ * @param {boolean | number} param0.gettools Limit the number of tools displayed
  * @param {boolean | number} param0.getrepos Limit the number of repositories displayed
  */
 export function render({
   repos,
   coding_adventures,
   tutorials,
+  tools,
   pages,
   current_id,
   getcoding_adventures,
   getrepos,
   gettutorials,
+  gettools,
 }) {
   renderMenu(pages, current_id);
 
@@ -192,6 +196,49 @@ export function render({
       moreGithubContainer.append(moreRepos);
     }
     gitHubSection.append(moreGithubContainer);
+  }
+
+  if (tools) {
+    // ----- Tools -----
+
+    const toolsSection = $("section.sect5");
+    const toolsColors = colorRange(
+      (window.toolsColorsStart || materialColors.lime)[500],
+      (window.toolsColorsEnd || materialColors.lightgreen)[500],
+      tools.length
+    );
+    const toolsBgColors = colorRange(
+      (window.toolsColorsStart || materialColors.lime)[800],
+      (window.toolsColorsEnd || materialColors.lightgreen)[800],
+      tools.length
+    );
+
+    i = 0;
+    for (const { url, displayName } of tools) {
+      const elem = $("<a></a>");
+      const titleContainer = $("<div></div>");
+      const title = $("<p></p>");
+      title.text(displayName.replace("-", " "));
+      elem.addClass("box-2");
+      elem.css("--bgColor2", toolsBgColors[i]);
+      elem.css("--color2", toolsColors[i]);
+      elem.attr("href", url);
+      titleContainer.append(title);
+      elem.append(titleContainer);
+      toolsSection.append(elem);
+      i++;
+    }
+
+    const moreToolsContainer = $("<div></div>");
+    if (gettools !== true) {
+      const moreTools = $("<a></a>");
+      moreTools.attr("href", "/tools.html");
+      moreTools.addClass("more-btn");
+      moreTools.addClass("unsplit");
+      moreTools.text("See all tools");
+      moreToolsContainer.append(moreTools);
+    }
+    toolsSection.append(moreToolsContainer);
   }
 
   $(".more-btn").addClass("hover-animation");

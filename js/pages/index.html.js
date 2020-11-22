@@ -6,4 +6,5 @@ requestData({
   getcoding_adventures: 4,
   getrepos: 3,
   gettutorials: 4,
+  gettools: 3,
 });

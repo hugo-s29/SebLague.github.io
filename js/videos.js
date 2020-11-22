@@ -210,3 +210,18 @@ export const _tutorials = [
     videoCount: 2,
   },
 ];
+
+/**
+ * @type {import("./module").Tool[]}
+ */
+
+export const _tools = [
+  {
+    url: "/binary-sandbox/index.html",
+    displayName: "Binary Sandbox",
+  },
+  {
+    url: "/ideagenerator/index.html",
+    displayName: "Game Idea generator",
+  },
+];
