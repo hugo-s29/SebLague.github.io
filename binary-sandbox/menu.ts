@@ -1,19 +1,56 @@
 import p5, { Vector } from "p5";
 import "./types";
-import { height, width, xInc, yInc } from "./main";
+import {
+  height,
+  width,
+  xInc,
+  yInc,
+  grayColor,
+  redColor,
+  whiteColor,
+  menuHeight,
+} from "./main";
 import { Cell } from "./cell";
+import { Input, Output } from "./io";
+import { Link } from "./link";
 
 const itemWidth = 125;
+const createBTNWidth = 175;
+
+const pointsInsideRect = ({ x1, y1, x2, y2 }, { x, y }) =>
+  x > x1 && x < x2 && y > y1 && y < y2;
 
 export class Menu {
   p: p5;
 
   items: Item[] = [];
 
-  h: number = 40;
+  static h: number = menuHeight;
+  ios: (Input | Output)[];
+  links: Link[];
+  cells: Cell[];
 
-  constructor(p: p5) {
+  constructor(p: p5, ios: (Input | Output)[], links: Link[], cells: Cell[]) {
     this.p = p;
+    this.ios = ios;
+    this.links = links;
+    this.cells = cells;
+  }
+
+  getPos() {
+    return this.p.createVector(0, height - Menu.h);
+  }
+
+  getHeight() {
+    return Menu.h;
+  }
+
+  getWidth() {
+    return width;
+  }
+
+  getItemsWidth() {
+    return this.items.length * itemWidth;
   }
 
   hover() {
@@ -36,6 +73,8 @@ export class Menu {
     let offset = 0;
     const mousePos = this.p.createVector(this.p.mouseX, this.p.mouseY);
 
+    if (this.insideCreateBtn()) return this.createClick();
+
     for (const item of this.items) {
       if (item.inside(mousePos, offset)) {
         item.onclick(cb);
@@ -46,18 +85,55 @@ export class Menu {
     }
   }
 
+  // Click on create button
+  //TODO: Implement cell creation
+  createClick() {
+    const name = prompt("Name of the new cell ?");
+  }
+
+  // Check if mouse is on the create button
+  insideCreateBtn() {
+    const mousePos = this.p.createVector(this.p.mouseX, this.p.mouseY);
+
+    const rect = {
+      x1: width - createBTNWidth,
+      x2: width,
+      y1: height - Menu.h,
+      y2: height,
+    };
+
+    return pointsInsideRect(rect, mousePos);
+  }
+
   show() {
     const p = this.p;
 
     p.noStroke();
-    p.fill("#212121");
-    p.rect(0, height - this.h, width, height);
+    p.fill(grayColor);
+    p.rect(0, height - Menu.h, width, height);
+
+    this.showCreateBtn();
 
     let offset = 0;
     for (const item of this.items) {
       item.show(offset);
       offset += itemWidth;
     }
+  }
+
+  showCreateBtn() {
+    const p = this.p;
+    p.fill(whiteColor);
+    p.noStroke();
+
+    p.textSize(18);
+
+    const mid = p.createVector(width - createBTNWidth / 2, height - Menu.h / 2);
+
+    p.text("CREATE", mid.x, mid.y);
+
+    p.fill(255, 7);
+    p.rect(width - createBTNWidth, height - Menu.h, createBTNWidth, Menu.h);
   }
 }
 
@@ -92,7 +168,7 @@ export class Item {
   inside(v: Vector, offset: number) {
     const [xMin, yMin, xMax, yMax] = [
       offset,
-      height - this.menu.h,
+      height - Menu.h,
       offset + itemWidth,
       height,
     ];
@@ -102,25 +178,22 @@ export class Item {
 
   show(offset: number) {
     const p = this.p;
-    p.fill("#fafafa");
+    p.fill(whiteColor);
     p.noStroke();
 
     p.textSize(18);
 
-    const mid = p.createVector(
-      offset + itemWidth / 2,
-      height - this.menu.h / 2
-    );
+    const mid = p.createVector(offset + itemWidth / 2, height - Menu.h / 2);
 
     p.text(this.label, mid.x, mid.y);
 
     if (this.hovered) {
       p.fill(255, 10);
-      p.rect(offset, height - this.menu.h, itemWidth, this.menu.h);
+      p.rect(offset, height - Menu.h, itemWidth, Menu.h);
     }
   }
 
-  onclick(cb: (c: Cell) => any) {
+  onclick(cb: (c: Input | Output | Cell) => any) {
     const v = this.p.createVector(this.p.mouseX, this.p.mouseY);
     const mid = v
       .copy()
@@ -137,12 +210,51 @@ export class Item {
       this.label,
       mid,
       inputs,
-      this.func
+      this.func,
+      this.menu,
+      this.cells
     );
+
     cell.setDragDifference(v);
 
     cb(cell);
 
     this.cells.push(cell);
+  }
+}
+
+export class IOItem extends Item {
+  type: "input" | "output";
+  inputsOutputs: (Input | Output)[];
+
+  constructor(
+    p: p5,
+    menu: Menu,
+    io: (Input | Output)[],
+    type: "input" | "output"
+  ) {
+    super(p, menu, type.toUpperCase(), [], () => null, 1);
+    this.type = type;
+    this.inputsOutputs = io;
+  }
+
+  createNewInput(v: Vector) {
+    return new Input(this.p, v, this.menu);
+  }
+  createNewOutput(v: Vector) {
+    return new Output(this.p, v, this.menu);
+  }
+
+  onclick(cb: (c: Input | Output | Cell) => any) {
+    const v = this.p.createVector(this.p.mouseX, this.p.mouseY);
+
+    const io =
+      this.type === "input" ? this.createNewInput(v) : this.createNewOutput(v);
+
+    io.setDeltaDrag(v);
+
+    cb(io);
+
+    this.inputsOutputs.push(io);
   }
 }
