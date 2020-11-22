@@ -149,13 +149,16 @@ export class Item {
   func: (...args: boolean[]) => boolean[];
   inputsCount: number;
 
+  cellLabelFunc: (...args: boolean[]) => string;
+
   constructor(
     p: p5,
     menu: Menu,
     label: string,
     cells: Cell[],
     func: (...args: boolean[]) => boolean[],
-    inputsCount: number
+    inputsCount: number,
+    cellLabelFunc?: (...args: boolean[]) => string
   ) {
     this.p = p;
     this.menu = menu;
@@ -163,6 +166,7 @@ export class Item {
     this.cells = cells;
     this.func = func;
     this.inputsCount = inputsCount;
+    this.cellLabelFunc = cellLabelFunc || (() => label);
   }
 
   inside(v: Vector, offset: number) {
@@ -199,18 +203,23 @@ export class Item {
       .copy()
       .sub(this.p.createVector((5 * xInc) / 2, (5 * yInc) / 2));
 
-    const inputs = [];
+    const inputs: boolean[] = [];
 
     for (let i = 0; i < this.inputsCount; i++) inputs.push(false);
+
+    // Replace undefined inputs with false
+    const func = (...v: boolean[]) => this.func(...v.map((b) => b || false));
+    const cellLabelFunc = (...v: boolean[]) =>
+      this.cellLabelFunc(...v.map((b) => b || false));
 
     const cell = new Cell(
       this.p,
       7.5 * xInc,
       0,
-      this.label,
+      cellLabelFunc,
       mid,
       inputs,
-      this.func,
+      func,
       this.menu,
       this.cells
     );

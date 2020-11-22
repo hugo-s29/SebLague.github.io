@@ -42,7 +42,7 @@ export class Cell {
   selected: boolean = false;
   index: number;
   hovered: boolean;
-  label: string;
+  label: (...args: boolean[]) => string;
   inputs: boolean[];
   outputs: boolean[];
 
@@ -63,7 +63,7 @@ export class Cell {
     p: p5,
     w: number,
     i: number,
-    label: string,
+    label: (...args: boolean[]) => string,
     pos: Vector,
     inputs: boolean[],
     func: (...args: boolean[]) => boolean[],
@@ -354,7 +354,7 @@ export class Cell {
     const mid = this.getMiddlePoint();
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(24);
-    p.text(this.label, mid.x, mid.y);
+    p.text(this.label(...this.inputs), mid.x, mid.y);
 
     p.noStroke();
     this.showInputs();

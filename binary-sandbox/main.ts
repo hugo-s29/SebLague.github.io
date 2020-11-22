@@ -44,11 +44,29 @@ new p5((p: p5) => {
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(24);
 
+    const toNumber = (...bool: boolean[]) =>
+      parseInt(bool.map((v) => +v).join(""), 2);
+    const toBinary = (dec: number) => (dec >>> 0).toString(2);
+
+    const xor = (a: boolean, b: boolean) => (a || b) && !(a && b);
+
     menu.items.push(new IOItem(p, menu, inputsOutputs, "input"));
     menu.items.push(new IOItem(p, menu, inputsOutputs, "output"));
     menu.items.push(new Item(p, menu, "AND", cells, (a, b) => [a && b], 2));
     menu.items.push(new Item(p, menu, "NOT", cells, (a) => [!a], 1));
     menu.items.push(new Item(p, menu, "OR", cells, (a, b) => [a || b], 2));
+    menu.items.push(new Item(p, menu, "XOR", cells, (a, b) => [xor(a, b)], 2));
+    menu.items.push(
+      new Item(
+        p,
+        menu,
+        "NUMBER",
+        cells,
+        (a, b, c, d) => [],
+        4,
+        (...v: boolean[]) => toNumber(...v).toString()
+      )
+    );
   };
 
   p.draw = () => {
