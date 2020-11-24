@@ -13,6 +13,7 @@ import {
 import { Cell } from "./cell";
 import { Input, Output } from "./io";
 import { Link } from "./link";
+import { getColor } from "./colors";
 
 const itemWidth = 125;
 const createBTNWidth = 175;
@@ -151,6 +152,8 @@ export class Item {
 
   cellLabelFunc: (...args: boolean[]) => string;
 
+  color: string;
+
   constructor(
     p: p5,
     menu: Menu,
@@ -167,6 +170,7 @@ export class Item {
     this.func = func;
     this.inputsCount = inputsCount;
     this.cellLabelFunc = cellLabelFunc || (() => label);
+    this.color = getColor(label);
   }
 
   inside(v: Vector, offset: number) {
@@ -221,7 +225,8 @@ export class Item {
       inputs,
       func,
       this.menu,
-      this.cells
+      this.cells,
+      this.color
     );
 
     cell.setDragDifference(v);

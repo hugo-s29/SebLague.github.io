@@ -54,6 +54,7 @@ new p5((p: p5) => {
     menu.items.push(new IOItem(p, menu, inputsOutputs, "output"));
     menu.items.push(new Item(p, menu, "AND", cells, (a, b) => [a && b], 2));
     menu.items.push(new Item(p, menu, "NOT", cells, (a) => [!a], 1));
+    menu.items.push(new Item(p, menu, "NAND", cells, (a, b) => [!(a && b)], 2));
     menu.items.push(new Item(p, menu, "OR", cells, (a, b) => [a || b], 2));
     menu.items.push(new Item(p, menu, "XOR", cells, (a, b) => [xor(a, b)], 2));
     menu.items.push(

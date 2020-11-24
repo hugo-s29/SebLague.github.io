@@ -58,6 +58,7 @@ export class Cell {
   cells: Cell[];
 
   func: (...args: boolean[]) => boolean[];
+  color: string;
 
   constructor(
     p: p5,
@@ -68,9 +69,11 @@ export class Cell {
     inputs: boolean[],
     func: (...args: boolean[]) => boolean[],
     menu: Menu,
-    cells: Cell[]
+    cells: Cell[],
+    color: string
   ) {
     this.p = p;
+    this.color = color;
     this.pos = pos;
     this.w = w;
     this.label = label;
@@ -341,7 +344,7 @@ export class Cell {
 
   show() {
     const p = this.p;
-    p.fill(grayColor);
+    p.fill(this.color);
     p.stroke(whiteColor);
 
     if (this.selected || this.hovered) p.strokeWeight(4);
